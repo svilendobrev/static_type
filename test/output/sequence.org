@@ -1,0 +1,28 @@
+
+
+
+  test_ctor_OK (Sequence_set_value_whole) ... ok
+  test_set_value_OK (Sequence_set_value_whole) ... 
+ A.m: Sequence(item: StaticType(int, auto_convert, default=int), default=Container_type)
+ A.n: Sequence(item: StaticType(int, auto_convert, default=int), auto_convert, default=Container_type)
+ A.p: Sequence(item: StaticType(int, auto_convert, default=int), auto_convert, default=Container_type), size 3..5
+ok
+  test_set_value__ERR (Sequence_set_value_whole) ... 
+ A.m: Sequence(item: StaticType(int, auto_convert, default=int), default=Container_type)
+ A.n: Sequence(item: StaticType(int, auto_convert, default=int), auto_convert, default=Container_type)
+ A.p: Sequence(item: StaticType(int, auto_convert, default=int), auto_convert, default=Container_type), size 3..5
+ok
+
+----------------------------------------------------------------------
+Ran 3 tests in <time1>s
+
+OK
+
+
+
+
+
+
+
+
+

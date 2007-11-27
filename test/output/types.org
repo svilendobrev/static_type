@@ -1,0 +1,98 @@
+
+a <class '__main__.A1'> 
+a.j j: Number(float, auto_convert, default=5) 
+a.i i: Number(int, auto_convert), meta 
+a.k k: Text(str, auto_convert)  <not-set-yet>
+a.p p: SubStruct(B1, auto_convert)  <not-set-yet>
+a.q q: SubStruct(B1, auto_convert, default=B1) 
+a.q.m m: Number(float, auto_convert, default=4) 
+a <class '__main__.A1'> 
+a.j j: Number(float, auto_convert, default=5) 
+a.k k: Text(str, auto_convert)  <not-set-yet>
+a.p p: SubStruct(B1, auto_convert)  <not-set-yet>
+a.q q: SubStruct(B1, auto_convert, default=B1) 
+a.q.m m: Number(float, auto_convert, default=4) 
+a.j j: Number(float, auto_convert, default=5) 
+a.k k: Text(str, auto_convert)  <not-set-yet>
+a.q.m m: Number(float, auto_convert, default=4) 
+
+a <class '__main__.A2'> 
+a.j j: Number(float, auto_convert, default=5) 
+a.i i: Number(int, auto_convert), meta 
+a.k k: Text(str, auto_convert)  <not-set-yet>
+a.p p: SubStruct(B1, auto_convert)  <not-set-yet>
+a.q q: SubStruct(B1, auto_convert, default=B1) 
+a.q.m m: Number(float, auto_convert, default=4) 
+a.r r: Sequence(item: StaticType(int, auto_convert, default=int), auto_convert, default=Container_type), size 2.. 
+a.r.items.0 item: StaticType(int, auto_convert, default=int) 
+a.r.items.1 item: StaticType(int, auto_convert, default=int) 
+a.s s: Sequence(item: Number(int, auto_convert), auto_convert, default=Container_type), size 2.. 
+a.s.items.0 item: Number(int, auto_convert)  <not-set-yet>
+a.s.items.1 item: Number(int, auto_convert)  <not-set-yet>
+a.t t: Sequence(item: SubStruct(B1, auto_convert, default=B1), auto_convert, default=Container_type), size 2.. 
+a.t.items.0 item: SubStruct(B1, auto_convert, default=B1) 
+a.t.items.0.m m: Number(float, auto_convert, default=4) 
+a.t.items.1 item: SubStruct(B1, auto_convert, default=B1) 
+a.t.items.1.m m: Number(float, auto_convert, default=4) 
+a.u u: Sequence(item: SubStruct(C1, auto_convert, default=C1), auto_convert, default=Container_type), size 1.. 
+a.u.items.0 item: SubStruct(C1, auto_convert, default=C1) 
+a.u.items.0.m m: Number(float, auto_convert, default=4) 
+a.u.items.0.n n: Sequence(item: SubStruct(B1, auto_convert, default=B1), auto_convert, default=Container_type), size 2.. 
+a.u.items.0.n.items.0 item: SubStruct(B1, auto_convert, default=B1) 
+a.u.items.0.n.items.0.m m: Number(float, auto_convert, default=4) 
+a.u.items.0.n.items.1 item: SubStruct(B1, auto_convert, default=B1) 
+a.u.items.0.n.items.1.m m: Number(float, auto_convert, default=4) 
+a.j j: Number(float, auto_convert, default=5) 
+a.i i: Number(int, auto_convert), meta 
+a.k k: Text(str, auto_convert)  <not-set-yet>
+a.q.m m: Number(float, auto_convert, default=4) 
+a.r.items.0 item: StaticType(int, auto_convert, default=int) 
+a.r.items.1 item: StaticType(int, auto_convert, default=int) 
+a.s.items.0 item: Number(int, auto_convert)  <not-set-yet>
+a.s.items.1 item: Number(int, auto_convert)  <not-set-yet>
+a.t.items.0.m m: Number(float, auto_convert, default=4) 
+a.t.items.1.m m: Number(float, auto_convert, default=4) 
+a.u.items.0.m m: Number(float, auto_convert, default=4) 
+a.u.items.0.n.items.0.m m: Number(float, auto_convert, default=4) 
+a.u.items.0.n.items.1.m m: Number(float, auto_convert, default=4) 
+
+a <class '__main__.A3'> 
+a.j j: Number(float, auto_convert, default=5) 
+a.k k: Text(str, auto_convert)  <not-set-yet>
+a.l__on l__on: optionality switch of l: Number(int, auto_convert, default=11), optional 
+a.l l: Number(int, auto_convert, default=11), optional 
+a.n__on n__on: optionality switch of n: Number(int, auto_convert, default=22), optional 
+a.n n: Number(int, auto_convert, default=22), optional 
+a.q q: SubStruct(B1, auto_convert, default=B1) 
+a.q.m m: Number(float, auto_convert, default=4) 
+a <class '__main__.A3'> 
+a.j j: Number(float, auto_convert, default=5) 
+a.k k: Text(str, auto_convert)  <not-set-yet>
+a.l l: Number(int, auto_convert, default=11), optional 
+a.n n: Number(int, auto_convert, default=22), optional 
+a.q q: SubStruct(B1, auto_convert, default=B1) 
+a.q.m m: Number(float, auto_convert, default=4) 
+a <class '__main__.A3'> 
+a.j j: Number(float, auto_convert, default=5) 
+a.k k: Text(str, auto_convert)  <not-set-yet>
+a.l l: Number(int, auto_convert, default=11), optional 
+a.q q: SubStruct(B1, auto_convert, default=B1) 
+a.q.m m: Number(float, auto_convert, default=4) 
+
+
+
+
+
+
+
+
+
+
+
+
+
+Frame( name=m, level=2, fullname=a2.bozers.m, typ=m: Number(float, auto_convert, default=4))
+Frame( name=m, level=4, fullname=a2.cozers.D1.t.m, typ=m: Number(float, auto_convert, default=4))
+Frame( name=i, level=1, fullname=a2.i, typ=i: Number(int, auto_convert), meta)
+Frame( name=j, level=1, fullname=a2.j, typ=j: Number(float, auto_convert, default=5))
+Frame( name=m, level=2, fullname=a2.q.m, typ=m: Number(float, auto_convert, default=4))

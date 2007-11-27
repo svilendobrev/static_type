@@ -1,0 +1,72 @@
+
+  test_ctor_OK (A) ... ok
+  test_set_value_OK (A) ... 
+ A.m: Bool(bool), range 0..1
+ A.n: Bool(bool, auto_convert), range 0..1
+ok
+  test_set_value__ERR (A) ... 
+ A.m: Bool(bool), range 0..1
+ A.n: Bool(bool, auto_convert), range 0..1
+ ! no testValue_err for n
+ok
+
+----------------------------------------------------------------------
+Ran 3 tests in <time1>s
+
+OK
+
+  test_ctor_OK (A) ... ok
+  test_set_value_OK (A) ... 
+ A.m: AKeyFromDict(None, default='b1') DICT
+ A.n: AKeyFromDict(None, default='b2') DICT
+ A.p: AKeyFromDict(None, default='b2') DICT
+ok
+  test_set_value__ERR (A) ... 
+ A.m: AKeyFromDict(None, default='b1') DICT
+ A.n: AKeyFromDict(None, default='b2') DICT
+ A.p: AKeyFromDict(None, default='b2') DICT
+ok
+
+----------------------------------------------------------------------
+Ran 3 tests in <time2>s
+
+OK
+
+
+
+  test_ctor_OK (A) ... ok
+  test_set_value_OK (A) ... 
+ A.m: Number(int)
+ A.n: Number(int, auto_convert)
+ A.p: Number(int, auto_convert), range 5..9
+ok
+  test_set_value__ERR (A) ... 
+ A.m: Number(int)
+ A.n: Number(int, auto_convert)
+ A.p: Number(int, auto_convert), range 5..9
+ok
+
+----------------------------------------------------------------------
+Ran 3 tests in <time3>s
+
+OK
+
+
+
+  test_ctor_OK (A) ... ok
+  test_set_value_OK (A) ... 
+ A.m: Text(str)
+ A.n: Text(str, auto_convert)
+ A.p: Text(str, auto_convert), size 3..5
+ok
+  test_set_value__ERR (A) ... 
+ A.m: Text(str)
+ A.n: Text(str, auto_convert)
+ ! no testValue_err for n
+ A.p: Text(str, auto_convert), size 3..5
+ok
+
+----------------------------------------------------------------------
+Ran 3 tests in <time4>s
+
+OK

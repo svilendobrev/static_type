@@ -1,0 +1,14 @@
+ForwardSubStruct.resolve <class '__main__.A'> prev: SubStruct(A, auto_convert, default=A)
+ForwardSubStruct.resolve <class '__main__.A'> next: SubStruct(A, auto_convert, default=A)
+ForwardSubStruct.resolve <class '__main__.C'> b: SubStruct(B, auto_convert, default=B)
+ForwardSubStruct.resolve <class '__main__.B'> c: SubStruct(C, auto_convert, default=C)
+!!! recursive set_default_value: <class '__main__.C'>.b = <class '__main__.B'>(); check auto_set/default_value
+B(
+    c = C(
+        b = B(
+            c = C(
+                b = <not-set-yet>
+            )
+        )
+    )
+)

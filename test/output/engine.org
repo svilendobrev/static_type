@@ -1,0 +1,45 @@
+ <module '__main__' from 'engine.py'>:
+    - order:
+      r, e, a, v
+    <class '__main__.Record'>:
+       - order:
+         ID, Date, Count, Key
+       - flattened order:
+         ID 	= ID: StaticType(int, auto_convert, validator=<function _validator_ID at <address1>>)
+         Date 	= Date: StaticType(None, validator=<function _validator_Date at <address2>>)
+         Count 	= Count: StaticType(int)
+         Key 	= Key: StaticType(str, default='empty/key/used')
+    <class '__main__.Input_Head'>:
+       - order:
+         timestamp
+       - flattened order:
+         timestamp 	= timestamp: StaticType(str, default=<lambda>)
+    <class '__main__.Input_Record'>:
+       - order:
+         Checksum
+       - flattened order:
+         timestamp 	= timestamp: StaticType(str, default=<lambda>)
+         ID 	= ID: StaticType(int, auto_convert, validator=<function _validator_ID at <address1>>)
+         Date 	= Date: StaticType(None, validator=<function _validator_Date at <address2>>)
+         Count 	= Count: StaticType(int)
+         Key 	= Key: StaticType(str, default='empty/key/used')
+         Checksum 	= Checksum: Tchecksum2(None)
+['timestamp', 'ID', 'Date', 'Count', 'Key', 'Checksum']
+Input_Record(
+    timestamp = 'Fri Jan  5 20:02:20 2002'
+    ID = 357
+    Date = '10.03'
+    Count = 2
+    Key = 'empty/key/used'
+    Checksum = <not-set-yet>
+)
+ OK Exception set wrong checksum '87599f628eb783682001069de83dafa2' with '1243213'
+ OK Exception Checksum
+timestamp 	Fri Jan  5 20:02:20 2002
+ID 	357
+Date 	10.03
+Count 	2
+Key 	empty/key/used
+ OK Exception Checksum
+ OK Exception 'Input_Record' object has no attribute 'boza'
+ OK Exception invalid literal for int() with base 10: 'rewre'
