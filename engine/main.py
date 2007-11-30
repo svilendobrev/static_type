@@ -248,11 +248,16 @@ class Mix4pickle( object):
         state = dict( me._walkItems() )
         return state
 
+    _pickle_translator = {}         #overload
     def __setstate__( me, state):
         if config._DBG_getsetstate: print '__setstate__', me.__class__
         me.__init__()
+        klas = me.__class__.__name__
+        translator = me._pickle_translator
         for k,v in state.iteritems():
-            setattr( me, k, v)
+            kk = translator.get(k,k)
+            if kk is None: print '__setstate__: ignoring attribute %(klas)s.%(kk)s=%(v)s' % locals()
+            else: setattr( me, kk, v)
 
 ########## equality
 class Mix4eq( object):
