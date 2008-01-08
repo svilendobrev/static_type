@@ -38,6 +38,29 @@ class StaticType( StaticType):
         me.name = name
         return me
 
+    def _no_default_value( me):
+        value = me.default_value
+        return value is config.notSetYet or value is _NONE
+
+    def _set_default_value( me, obj):
+        if me._no_default_value(): raise
+        value = me.default_value
+        if callable( value):    #sort-of generator - e.g. timestamp, checksum etc
+            _stack = me._stack
+            name = me.name
+            #print 'setdef', name, id(me), id(obj), _stack
+            if _stack is not None:
+                if id(me) in _stack:
+                    print '!!! recursive set_default_value: %(klas)s.%(name)s = %(value)s(); check auto_set/default_value' % locals()
+                    raise  #break recursion
+                _stack.append( id(me) )
+            if me.default_value_wants_instance:
+                value = value( instance=obj, name=name)
+            else:
+                value = value()
+        value = me.__set__( obj, value, initial_default=True)
+        return value
+
     def __get__( me, obj, klas =None, no_defaults =False):
         if obj is None: return me
         name = me.name
@@ -45,21 +68,8 @@ class StaticType( StaticType):
 
         try: value = getattr( obj._props, name)
         except AttributeError:
-            value = me.default_value
-            if value in (config.notSetYet, _NONE) or no_defaults: raise
-            if callable( value):    #sort-of generator - e.g. timestamp, checksum etc
-                _stack = me._stack
-                #print 'setdef', name, id(me), id(obj), _stack
-                if _stack is not None:
-                    if id(me) in _stack:
-                        print '!!! recursive set_default_value: %(klas)s.%(name)s = %(value)s(); check auto_set/default_value' % locals()
-                        raise  #break recursion
-                    _stack.append( id(me) )
-                if me.default_value_wants_instance:
-                    value = value( instance=obj, name=name)
-                else:
-                    value = value()
-            value = me.__set__( obj, value, initial_default=True)
+            if no_defaults: raise
+            value = me._set_default_value( obj)
             #_stack.pop()   DONT!
             #XXX DO NOT touch stack-stuff, esp. do not remove items from it!
             #XXX if this catches recursion, either there IS recursion or needs completely different solution
