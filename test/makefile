@@ -46,7 +46,7 @@ $(TESTOUT)/%.result: %.py
 clean-%: clean-%.ok clean-%.result
 	@echo "cleaned"
 rmpyc:
-	-rm -f *.pyc */*.pyc */*/*.pyc
+	find . -follow -name \*.pyc -exec rm {} \;
 
 help:
 	@echo "possible targets:"
