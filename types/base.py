@@ -160,7 +160,7 @@ class StaticType( static_type.StaticType):
         name = property( get_name)
 
         def __get__( me, obj, *args_ignore,**kargs_ignore):
-            if not obj: return me
+            if obj is None: return me
             obj = obj._props
             name = me.name
             try:

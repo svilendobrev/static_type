@@ -92,7 +92,7 @@ class Proxy4Container_order( Proxy4Container):
     def __init__( me, parent, obj, klas =None, *a,**k):
         Proxy4Container.__init__( me, parent, obj, klas, *a,**k )
         order_name = me.order_name
-        if obj:
+        if obj is not None:
             _getmeta_attr = me._getmeta_attr_inst
             me._getorder = lambda : _getmeta_attr( obj, order_name, None)
         else:
