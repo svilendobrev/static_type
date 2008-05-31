@@ -33,13 +33,14 @@ class Proxy4Container( object):
         me.parent = parent
         #me.obj = obj or klas
         #me.is_klas = not obj
-        if obj:
+        if obj is not None:
             _getattr = me._getattr
             me._getvalue = lambda k: _getattr( obj, k, notSetYet)
         else:
             me._getvalue = parent.__getitem__
 
     def iteritems( me, order =None):
+        'when invoked by class.StaticType, same as itertypes; else yield instance.attr-values'
         _getvalue = me._getvalue
         for k in me.iterkeys( order):
             yield k, _getvalue( k)
@@ -108,7 +109,13 @@ class Descriptor4Container( Container ):
         me.Proxy4Container = Proxy4Container
         me.notSetYet = notSetYet
         Container.__init__( me)
-    def __get__( me, obj, klas =None, **kargs_ignore):
+    _klasProxy = None
+    def __get__( me, obj, klas, **kargs_ignore):
+        if obj is None:
+            r = me._klasProxy
+            if r is None:
+                r = me._klasProxy = me.Proxy4Container( me, obj, klas, me.notSetYet)
+            return r
         return me.Proxy4Container( me, obj, klas, me.notSetYet)
     def iterkeys( me, order =None):
         if order is not None:
