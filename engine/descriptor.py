@@ -51,6 +51,7 @@ class StaticType( StaticType):
             #print 'setdef', name, id(me), id(obj), _stack
             if _stack is not None:
                 if id(me) in _stack:
+                    klas = obj.__class__
                     print '!!! recursive set_default_value: %(klas)s.%(name)s = %(value)s(); check auto_set/default_value' % locals()
                     raise  #break recursion
                 _stack.append( id(me) )
