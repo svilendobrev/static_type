@@ -5,7 +5,7 @@ base for StaticTyping + structs, autotest, optional, alternative, meta(class-lev
 """
 
 import static_type
-from static_type.util.attr import issubclass
+from static_type.util.attr import issubclass, getattr_local_class_only
 from static_type.util.str import str_args_kargs, make_str
 from static_type.util import class_attr
 from static_type import _NONE, config
@@ -365,13 +365,18 @@ class StaticStruct( StaticTyperBase):
 
     @classmethod
     def _order_Statics( klas, items =False):
-        order = klas._order_maker( klas)
-        _order_Statics_gettype = klas._order_Statics_gettype
-        for k in order:
-            try:
-                typ = _order_Statics_gettype( klas, k)
-            except KeyError:
-                continue
+        r = getattr_local_class_only( klas, '_order_Statics_cache', None)   #cleanup?
+        if r is None:
+            r = klas._order_Statics_cache = []
+            order = klas._order_maker( klas)
+            _order_Statics_gettype = klas._order_Statics_gettype
+            for k in order:
+                try:
+                    typ = _order_Statics_gettype( klas, k)
+                except KeyError:
+                    continue
+                r.append( (k,typ) )
+        for k,typ in r:
             if items: yield k,typ
             else: yield k
 
