@@ -9,41 +9,68 @@ class ForwardSubStruct( StaticStruct):
             who = whoo
         return SubStruct( _Forwarder, **kargs)
 
+
     @staticmethod
-    def resolve1( v, alldict):
-        #v: SubStruct; v.typ: Forwarder
-        name = v.typ.who
+    def zzresolve1( typ, *namespaces):
+        #typ: SubStruct; typ.typ: Forwarder
+        name = typ.typ.who
         if '.' in name: mod,name = name.rsplit('.',1)   #XXX ignore mod???
-        try:
-            who = alldict[ name]
-        except KeyError:
-            print klas, k,v, name
-            print alldict
-            raise
+        for namespace in namespaces:
+            if name in namespace:
+                who = namespace[ name]
+                break
+        else:
+            raise KeyError, '%(klas)s . %(typ)s: cant resolve %(name)s' % locals()
         assert issubclass( who, StaticStruct)
         #redo the auto_set/default_value stuff
-        auto_set = v.auto_set or getattr( who, 'auto_set', False)
+        auto_set = typ.auto_set or getattr( who, 'auto_set', False)
         default_value = config.notSetYet
         if auto_set: default_value = who
-        if v.factory is v.typ: v.factory = who
-        v.typ = who
-        v.auto_set = auto_set
-        v.default_value = default_value
-        v.forward = True
+        if typ.factory is typ.typ: typ.factory = who
+        typ.typ = who
+        typ.auto_set = auto_set
+        typ.default_value = default_value
+        typ.forward = True
     @staticmethod
-    def resolve( alldict, debug =False):
+    def resolve( namespace, base_klas =StaticStruct, debug =False):
+        return _resolver.resolve( namespace, base_klas=base_klas, debug=debug)
+
         from static_type.util.attr import issubclass
-        for item in alldict.itervalues():
-            if item is ForwardSubStruct: continue
-            if not issubclass( item, StaticStruct): continue
-            klas = item
-            for k,v in klas.StaticType.itertypes():
-                if isinstance( v, SubStruct):
-                    if issubclass( v.typ, ForwardSubStruct):
-                        #print klas, k,v
-                        ForwardSubStruct.resolve1( v, alldict)
-                        if debug: print 'ForwardSubStruct.resolve', klas, v
-        return alldict
+        for klas in namespace.itervalues():
+            if klas is ForwardSubStruct: continue
+            if not issubclass( klas, base_klas): continue
+            for k,typ in klas.StaticType.itertypes():
+                if isinstance( typ, SubStruct):
+                    if issubclass( typ.typ, ForwardSubStruct):
+                        #print klas, k,typ
+                        ForwardSubStruct.resolve1( typ, namespace)
+                        if debug: print 'ForwardSubStruct.resolve', klas, typ
+    def resolve1( typ, namespace, base_klas =StaticStruct, debug =False):
+        return _resolver.resolve1( typ, debug=debug, *namespaces)
+
+from static_type.util.forward_resolver import Resolver
+class Resolver( Resolver):
+    dbgpfx = 'ForwardSubStruct.'
+    def is_forward_decl( me, typ):
+        return issubclass( typ.typ, ForwardSubStruct) and typ.typ.who
+    def klas_reftype_iterator( me, klas):
+        for k,typ in klas.StaticType.itertypes():
+            if isinstance( typ, SubStruct):
+                yield typ
+    exclude = [ ForwardSubStruct ]
+    def finisher( me, typ, resolved_klas):
+        who = resolved_klas
+        assert issubclass( who, StaticStruct)
+        #redo the auto_set/default_value stuff
+        auto_set = typ.auto_set or getattr( who, 'auto_set', False)
+        default_value = config.notSetYet
+        if auto_set: default_value = who
+        if typ.factory is typ.typ: typ.factory = who
+        typ.typ = who
+        typ.auto_set = auto_set
+        typ.default_value = default_value
+        typ.forward = True
+_resolver = Resolver()
 
 if __name__=='__main__':
     class A( StaticStruct):
@@ -55,7 +82,7 @@ if __name__=='__main__':
     class C( StaticStruct):
         b = ForwardSubStruct( 'B')#, auto_set=0 )
 
-    ForwardSubStruct.resolve( locals(), 1 )
+    ForwardSubStruct.resolve( locals(), debug=1 )
 
     assert A.next.typ is A
     assert A.prev.typ is A
