@@ -445,6 +445,7 @@ class SubStruct( StaticType):
         assert issubclass( type, StaticStruct)
         if auto_set is None: auto_set = getattr( type, 'auto_set', me.auto_set)
         if auto_set: default_value = type
+        me.auto_set = auto_set  #store, needed in ForwardSubStruct
         StaticType.__init__( me, type=type, default_value=default_value, factory=factory or type,
             typ_matcher= static_type.typ_matcher_isinstance,
             **kargs)

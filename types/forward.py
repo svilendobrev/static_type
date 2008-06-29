@@ -10,6 +10,27 @@ class ForwardSubStruct( StaticStruct):
         return SubStruct( _Forwarder, **kargs)
 
     @staticmethod
+    def resolve1( v, alldict):
+        #v: SubStruct; v.typ: Forwarder
+        name = v.typ.who
+        if '.' in name: mod,name = name.rsplit('.',1)   #XXX ignore mod???
+        try:
+            who = alldict[ name]
+        except KeyError:
+            print klas, k,v, name
+            print alldict
+            raise
+        assert issubclass( who, StaticStruct)
+        #redo the auto_set/default_value stuff
+        auto_set = v.auto_set or getattr( who, 'auto_set', False)
+        default_value = config.notSetYet
+        if auto_set: default_value = who
+        if v.factory is v.typ: v.factory = who
+        v.typ = who
+        v.auto_set = auto_set
+        v.default_value = default_value
+        v.forward = True
+    @staticmethod
     def resolve( alldict, debug =False):
         from static_type.util.attr import issubclass
         for item in alldict.itervalues():
@@ -20,22 +41,7 @@ class ForwardSubStruct( StaticStruct):
                 if isinstance( v, SubStruct):
                     if issubclass( v.typ, ForwardSubStruct):
                         #print klas, k,v
-                        try:
-                            who = alldict[ v.typ.who]
-                        except KeyError:
-                            print klas, k,v, v.typ.who
-                            print alldict
-                            raise
-                        assert issubclass( who, StaticStruct)
-                        #redo the auto_set/default_value stuff
-                        auto_set = getattr( who, 'auto_set', SubStruct.auto_set)
-                        default_value = config.notSetYet
-                        if auto_set: default_value = who
-                        if v.factory is v.typ: v.factory = who
-                        v.typ = who
-                        v.auto_set = auto_set
-                        v.default_value = default_value
-                        v.forward = True
+                        ForwardSubStruct.resolve1( v, alldict)
                         if debug: print 'ForwardSubStruct.resolve', klas, v
         return alldict
 
