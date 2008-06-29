@@ -82,6 +82,7 @@ class StaticType( StaticType):
     def __set__( me, obj, value, initial_default =False):
         ''' must return value '''
         name = me.name
+        assert name
         #if obj._debug_props_get_set: print 'setattr', name,value
         if value is not config.notSetYet:
             #print type(value),id(value),id(config.notSetYet),value

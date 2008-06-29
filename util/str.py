@@ -28,8 +28,9 @@ from attr import get_attrib
 
 _level = 0
 _stack = []
-def make_str( me, order, name_name ='name', tab ='    ',
-                delimiter ='\n',
+_make_str_delimiter = '\n'
+_make_str_tab = 4*' '
+def make_str( me, order, name_name ='name',
                 kv_format  ='%s = %r',
                 attr_filter =lambda a: a.startswith('__') and a.endswith('__'),
                 notSetYet =notSetYet,
@@ -38,6 +39,8 @@ def make_str( me, order, name_name ='name', tab ='    ',
     """ Warning: this may recurse forever if a property calls here,
         AND is listed in the order...
     """
+    delimiter = kargs.pop( 'delimiter', _make_str_delimiter)
+    tab       = kargs.pop( 'tab', _make_str_tab)
     global _level, _stack
     #print id(me), type(me), _stack
     #if id(me) in _stack: print '*'

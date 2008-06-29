@@ -263,19 +263,24 @@ class Mix4pickle( object):
 class Mix4eq( object):
     'needs _walkItems - see Mix4eq'
     __slots__ = ()
+    _debug_Mix4eq = False
     def __eq__( me, other):
-        same = me.__class__ is other.__class__
-        if not same: return same
+        if me._debug_Mix4eq: print 'eq?', object.__repr__( me), object.__repr__( other)
+        if me.__class__ is not other.__class__:
+            if me._debug_Mix4eq: print 'diff class'
+            return False
         empty=1
         notSetYet = config.notSetYet
-        for k,v in me._walkItems(): #order_Statics( items=True):
+        for k,v in me._walkItems():
             empty=0
             ov = getattr( other, k, notSetYet)
             if not (ov == v):
+                if me._debug_Mix4eq: print 'diff val', k,`v`,`ov`
                 return False
         if empty:
-            for k,v in other._walkItems(): #order_Statics( items=True):
+            for k,v in other._walkItems():
                 if v is not notSetYet:
+                    if me._debug_Mix4eq: print 'one empty, other not', k
                     return False        #not empty -> not same
             #here -> other is empty -> same
         return True
