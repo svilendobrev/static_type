@@ -61,6 +61,7 @@ class Proxy4Container( object):
     #explicit these
     def iterkeys( me, order =None):
         return me.parent.iterkeys( order)
+    __iter__ = iterkeys
     def __getitem__( me, key):
         return me.parent[ key]
     def __contains__( me, key):
