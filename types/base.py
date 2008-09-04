@@ -120,6 +120,33 @@ class StaticType( static_type.StaticType):
         return getattr( me.factory, 'type_cxx', None) or getattr( me.factory, 'name', None) or me._type_cxx or getattr( me.typ, '__name__', None)
     type_cxx = property( __get_type_cxx, __set_type_cxx)
 
+    class UIdescr( object):
+        def __init__( me, name, default =None):
+            me.name = name
+            me.default = None
+        def __get__( me, obj, *args,**kargs):
+            if obj is None: return me
+            try: UI = obj.UI
+            except AttributeError: UI = obj.UI = dict()
+            return UI.get( me.name, me.default)
+            #return getattr( obj.UI, me.name, me.default)
+        def __set__( me, obj, value):
+            try: UI = obj.UI
+            except AttributeError: UI = obj.UI = dict()
+            UI[ me.name] = value
+            #setattr( obj.UI, me.name, value)
+
+        @classmethod
+        def init_kargs( klas, instance, kargs):
+            for k in dir( instance):
+                v = getattr( instance.__class__, k, None)
+                if isinstance( v, klas):
+                    v.__set__( instance, kargs.pop( k, v.default) )
+            return kargs
+
+    UI_hide = UIdescr( 'hide', False)       #dontshow in UI
+    UI_width= UIdescr( 'width', None)       #field text-width (characters)
+
     def __init__( me, type,
                     comment     ='',
                     type_cxx    =None,
@@ -128,15 +155,11 @@ class StaticType( static_type.StaticType):
                     optional    =False,     #False, True (opt but off), 'on' (opt and on)
                     readonly    =False,
                     constant    =False,     #readonly-alias
-                    UI_hide =False,         #dontshow in UI
-                    UI_width =None,         #field text-width (characters)
                     meta =False,            #True - subclass var - subclasses assign a value
                                             #False- instance var - instances assign a value
                     auto_convert =True,     #if type present and not matching as of value, type(value) is attempted
                     **kargs):
-
-        me.UI_width = UI_width
-        me.UI_hide = UI_hide
+        me.UIdescr.init_kargs( me, kargs)
 #        me.type_cxx = type_cxx or getattr( type, '__name__', None)
         me._type_cxx = type_cxx
         me.factory   = factory
