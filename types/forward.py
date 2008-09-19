@@ -4,47 +4,16 @@
 from base import StaticStruct, SubStruct, config
 
 class ForwardSubStruct( StaticStruct):
+    auto_set = None     #else SubStruct.default kicks in too early
     def __new__( klas, whoo, **kargs):
         class _Forwarder( ForwardSubStruct):
             who = whoo
         return SubStruct( _Forwarder, **kargs)
 
-
-    @staticmethod
-    def zzresolve1( typ, *namespaces):
-        #typ: SubStruct; typ.typ: Forwarder
-        name = typ.typ.who
-        if '.' in name: mod,name = name.rsplit('.',1)   #XXX ignore mod???
-        for namespace in namespaces:
-            if name in namespace:
-                who = namespace[ name]
-                break
-        else:
-            raise KeyError, '%(klas)s . %(typ)s: cant resolve %(name)s' % locals()
-        assert issubclass( who, StaticStruct)
-        #redo the auto_set/default_value stuff
-        auto_set = typ.auto_set or getattr( who, 'auto_set', False)
-        default_value = config.notSetYet
-        if auto_set: default_value = who
-        if typ.factory is typ.typ: typ.factory = who
-        typ.typ = who
-        typ.auto_set = auto_set
-        typ.default_value = default_value
-        typ.forward = True
     @staticmethod
     def resolve( namespace, base_klas =StaticStruct, debug =False):
         return _resolver.resolve( namespace, base_klas=base_klas, debug=debug)
-
-        from static_type.util.attr import issubclass
-        for klas in namespace.itervalues():
-            if klas is ForwardSubStruct: continue
-            if not issubclass( klas, base_klas): continue
-            for k,typ in klas.StaticType.itertypes():
-                if isinstance( typ, SubStruct):
-                    if issubclass( typ.typ, ForwardSubStruct):
-                        #print klas, k,typ
-                        ForwardSubStruct.resolve1( typ, namespace)
-                        if debug: print 'ForwardSubStruct.resolve', klas, typ
+    @staticmethod
     def resolve1( typ, namespace, base_klas =StaticStruct, debug =False):
         return _resolver.resolve1( typ, debug=debug, *namespaces)
 
@@ -62,7 +31,8 @@ class Resolver( Resolver):
         who = resolved_klas
         assert issubclass( who, StaticStruct)
         #redo the auto_set/default_value stuff
-        auto_set = typ.auto_set or getattr( who, 'auto_set', False)
+        auto_set = typ.auto_set
+        if auto_set is None: auto_set = getattr( who, 'auto_set', SubStruct.auto_set)
         default_value = config.notSetYet
         if auto_set: default_value = who
         if typ.factory is typ.typ: typ.factory = who
@@ -98,5 +68,7 @@ if __name__=='__main__':
 #    print id(z)
 #    print id(x)
     print b
+
+    #TODO: test auto_set: setup in combinations of struct/ref
 
 # vim:ts=4:sw=4:expandtab
