@@ -1,5 +1,5 @@
 #$Id$
-# -*- coding: cp1251 -*-
+
 '''common between static_type and plainwrap resolvers.
 
 a klas has declarations of references (reftypes), and each of those

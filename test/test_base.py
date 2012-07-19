@@ -1,5 +1,5 @@
 #$Id$
-# -*- coding: cp1251 -*-
+
 
 from static_type.types.base import StaticType, _NONE, StaticStruct, issubclass, Messager, config
 
