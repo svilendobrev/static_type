@@ -17,7 +17,7 @@ class ForwardSubStruct( StaticStruct):
     def resolve1( typ, namespace, base_klas =StaticStruct, debug =False):
         return _resolver.resolve1( typ, debug=debug, *namespaces)
 
-from static_type.util.forward_resolver import Resolver
+from svd_util.forward_resolver import Resolver
 class Resolver( Resolver):
     dbgpfx = 'ForwardSubStruct.'
     def is_forward_decl( me, typ):

@@ -5,9 +5,9 @@ base for StaticTyping + structs, autotest, optional, alternative, meta(class-lev
 """
 
 import static_type
-from static_type.util.attr import issubclass, getattr_local_instance_only
-from static_type.util.str import str_args_kargs, make_str
-from static_type.util import class_attr
+from svd_util.attr import issubclass, getattr_local_instance_only
+from svd_util.str import str_args_kargs, make_str
+from svd_util import class_attr
 from static_type import _NONE, config
 
 import warnings
@@ -366,7 +366,7 @@ class StaticTyperBase( static_type.StaticTyper):
     __metaclass__ = StaticTyper_factory
     #intermediate level... used in resgen?
 
-from static_type.util.assignment_order import flatten_class__order
+from svd_util.assignment_order import flatten_class__order
 
 class StaticStruct( StaticTyperBase):
     non_atomary = True

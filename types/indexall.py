@@ -14,7 +14,7 @@ if __name__ == '__main__':
 """
 
 from base import issubclass, Messager, StaticStruct
-#from static_type.util.dictOrder import dictOrder
+#from svd_util.dictOrder import dictOrder
 
 def build_indexes( namespace, base_type,
             ID =True, with_classes =False, check_meta =True, dict4byname =None ):
@@ -78,7 +78,7 @@ def build_order( namespace, filename,
         **kargs_flatten_order ):
     try: namespace[ '_order' ]
     except KeyError:
-        from static_type.util.assignment_order import ASTVisitor4assign
+        from svd_util.assignment_order import ASTVisitor4assign
         root = ASTVisitor4assign( **kargs_visitor
                 ).parseFile_of_module( filename
                 )

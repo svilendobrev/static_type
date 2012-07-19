@@ -352,7 +352,7 @@ if __name__ == '__main__':
     from static_type.types.base import StaticStruct, Messager
     from static_type.test.test_base import test, _test_Base
     from atomary import Number, Text
-    from static_type.util.attr import set_attrib
+    from svd_util.attr import set_attrib
     class t_Base( _test_Base, unittest.TestCase): pass
 
     class t_Sequence( t_Base):

@@ -2,7 +2,7 @@
 #s.dobrev 2k4
 
 import base
-import static_type.util.str as _str
+import svd_util.str as _str
 
 '''_NONE can be imported elsewhere; it is constant singleton; do NOT override/replace;
  use ONLY for func-args default_values and similar, meaning no argument sent;

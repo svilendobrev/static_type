@@ -49,11 +49,11 @@ class Input_Record( Input_Head, Record):
 if 10:      #auto-calc order
     try: __order
     except NameError:
-        from static_type.util.assignment_order import ASTVisitor4assign
+        from svd_util.assignment_order import ASTVisitor4assign
         ASTVisitor4assign().parseFile_of_module( __file__).set_order_in_namespace( globals(), flatten=True, ignore_missing_order=True)
 
 if __name__ == '__main__':
-    from static_type.util.assignment_order import test, get_class_attributes_flatten_ordered
+    from svd_util.assignment_order import test, get_class_attributes_flatten_ordered
     import __main__
     test( __main__)
 

@@ -13,8 +13,8 @@
    struct.StaticTypes is readonly - cannot be assigned to, and cannot be setitem'ed
 """
 
-from static_type.util.attr import getattr_local_class_only, getattr_local_instance_only
-from static_type.util.str import notSetYet
+from svd_util.attr import getattr_local_class_only, getattr_local_instance_only
+from svd_util.str import notSetYet
 
 Container = dict
 
@@ -128,7 +128,7 @@ class Descriptor4Container( Container ):
                 yield k
 
 if __name__=='__main__':
-    from static_type.util.str import make_str
+    from svd_util.str import make_str
     class Q( object):
         _myorder = ['a','b','c']
         class Proxy4Container2( Proxy4Container_order):
